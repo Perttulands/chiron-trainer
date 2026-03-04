@@ -1,5 +1,7 @@
 # Chiron
 
+![Chiron — How Agents Evolve](images/chiron_explained.png)
+
 *The cave on Mount Pelion. Fire at the center. Patterns scratched into stone from a thousand previous sessions. Four alcoves. The climb is the filter.*
 
 ---
