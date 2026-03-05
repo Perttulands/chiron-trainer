@@ -1,6 +1,6 @@
 # Chiron
 
-![Chiron — How Agents Evolve](images/chiron_explained.png)
+![Chiron Banner](banner.png)
 
 *The cave on Mount Pelion. Fire at the center. Patterns scratched into stone from a thousand previous sessions. Four alcoves. The climb is the filter.*
 
@@ -17,6 +17,8 @@ Train AI agents through iterative evaluation loops. Define what you need, genera
 ## How it works
 
 Chiron generates system prompts for AI agents, runs them against your inputs, collects your evaluations, and uses the feedback to evolve better prompts. All state is stored locally in a single JSON file.
+
+![Chiron — How Agents Evolve](images/chiron_explained.png)
 
 **Quickstart flow** (single lineage):
 ```
