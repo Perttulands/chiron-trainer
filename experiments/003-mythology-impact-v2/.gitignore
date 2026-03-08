@@ -1,0 +1,4 @@
+# Large run artifacts — data extracted to dataset.csv/json
+**/strace-open.log
+**/workspace-after.tgz
+runs/.orphaned-workdirs/

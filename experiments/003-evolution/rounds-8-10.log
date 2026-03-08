@@ -1,0 +1,10 @@
+[21:49:54] Waiting for Round 8...
+[22:12:54] Round 8 complete
+=== R8 RESULTS ===
+                                 B1=2 B2=2 B3=0 B4=0 Tot=4/8 Tests=PASS Wall=346s
+                                 B1=2 B2=2 B3=1 B4=1 Tot=6/8 Tests=PASS Wall=990s
+
+[22:12:55] === Designing Round 9 ===
+[22:12:55] Running Round 9 (9b@t=0.3 with B3/B4 targeting)...
+Experiment: 003-evolution (2 cells)
+Warning: Model "qwen3.5:9b-t03" not found for provider "ollama". Using custom model id.

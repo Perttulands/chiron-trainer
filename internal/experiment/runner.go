@@ -138,11 +138,23 @@ func (r *Runner) Run(ctx context.Context, cfg *Config, opts RunOptions) ([]CellR
 			return results, fmt.Errorf("reading system prompt %s: %w", sysPromptPath, err)
 		}
 
+		// Resolve extension paths relative to experiment base dir.
+		var extPaths []string
+		for _, ext := range cfg.Execution.Extensions {
+			absExt := ext
+			if !filepath.IsAbs(ext) {
+				absExt = filepath.Join(r.baseDir, ext)
+			}
+			extPaths = append(extPaths, absExt)
+		}
+
 		sbCfg := sandbox.Config{
-			Engine:  cfg.Execution.Sandbox,
-			Tools:   cfg.Scenario.Tools,
-			BrStub:  cfg.Execution.BrStub,
-			Timeout: time.Duration(cfg.Execution.TimeoutSeconds) * time.Second,
+			Engine:     cfg.Execution.Sandbox,
+			Tools:      cfg.Scenario.Tools,
+			BrStub:     cfg.Execution.BrStub,
+			Timeout:    time.Duration(cfg.Execution.TimeoutSeconds) * time.Second,
+			Extensions: extPaths,
+			PiFlags:    cfg.Execution.PiFlags,
 		}
 
 		wallStart := time.Now()

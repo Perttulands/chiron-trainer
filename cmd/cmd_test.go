@@ -17,6 +17,7 @@ func TestRootCmdHasAllSubcommands(t *testing.T) {
 		"session", "quickstart", "training", "lineage",
 		"iterate", "run", "evaluate", "artifact",
 		"promote", "directive", "export", "doctor",
+		"experiment", "sandbox",
 	}
 
 	registered := map[string]bool{}

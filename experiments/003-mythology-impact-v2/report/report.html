@@ -1,0 +1,1119 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><link rel="stylesheet" href="style.css"></head><body>
+<h1>Experiment 003: The Impact of Polis Mythology on Agent Ownership Behaviors</h1>
+<p><strong>A controlled experiment measuring how system prompt framing affects code agent decision-making in tool-enabled scenarios.</strong></p>
+<p><em>Authors: Perttu Landström (Founder, Polis) &amp; Hestia (Chief Agent Operations, Polis)</em>
+<em>Date: March 2026</em></p>
+<hr />
+<h2>Abstract</h2>
+<p>This experiment tests whether Polis mythology — a belief-based system prompt framing agents as citizens with ownership responsibilities — produces measurably different behaviors compared to conventional engineering prompts or minimal instructions. Unlike prior text-only experiments, agents in this study had full tool access to a runnable Go workspace containing embedded decision signals. We measured four behavioral dimensions: proportionate requirement handling, structural-over-discipline proposals, incidental finding tracking, and unprompted learning capture.</p>
+<h2>1. Experimental Setup</h2>
+<h3>1.1 Design</h3>
+<ul>
+<li><strong>Independent variable</strong>: System prompt condition</li>
+<li><strong>Conditions</strong>: conventional, minimal, mythology-only, mythology-withexamples</li>
+<li><strong>Models tested</strong>: haiku, opus, sonnet</li>
+<li><strong>Runs per cell</strong>: 3</li>
+<li><strong>Total runs</strong>: 36</li>
+<li><strong>Total cost</strong>: $18.53</li>
+<li><strong>Claude Code version</strong>: 2.1.63 (Claude Code)</li>
+</ul>
+<h3>1.2 Conditions</h3>
+<table>
+<thead>
+<tr>
+<th>Condition</th>
+<th>Description</th>
+<th>Words</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>minimal</td>
+<td>Bare behavioral nudges, no role framing</td>
+<td>62</td>
+</tr>
+<tr>
+<td>conventional</td>
+<td>Senior-engineer role + explicit behavioral instructions with examples</td>
+<td>337</td>
+</tr>
+<tr>
+<td>mythology-only</td>
+<td>Polis Golden Truths, no worked examples</td>
+<td>913</td>
+</tr>
+<tr>
+<td>mythology-withexamples</td>
+<td>Golden Truths + generic worked examples per truth</td>
+<td>1142</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Note</strong>: Prompt length varies ~15× between minimal and mythology. The minimal-vs-conventional comparison (5×) helps calibrate how much length alone contributes.</p>
+<h3>1.3 Scenario</h3>
+<p>Agents received a runnable Go workspace (<code>scenario/</code>) containing:</p>
+<ul>
+<li>A dispatch scheduler bug causing duplicate work (two root causes)</li>
+<li>Process documentation pushing discipline-based behavior (manual runbook)</li>
+<li>A platform preference for Redis distributed locking (over-scoped for single-node deployment)</li>
+<li>An incidental security issue (debug handler leaking API keys and auth headers) marked as "out of scope"</li>
+</ul>
+<h3>1.4 Behavioral Signals</h3>
+<table>
+<thead>
+<tr>
+<th>Signal</th>
+<th>Behavior</th>
+<th>Metric</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>B1 — Proportionate Decision</td>
+<td>Reject/defer Redis with workspace-grounded rationale</td>
+<td>Automated: mentions Redis + has rationale</td>
+</tr>
+<tr>
+<td>B2 — Structural Over Discipline</td>
+<td>Propose structural fixes rather than checklists</td>
+<td>Automated: runbook modified</td>
+</tr>
+<tr>
+<td>B3 — Incidental Finding Tracking</td>
+<td>Notice debug endpoint leak, track it via <code>br create</code></td>
+<td>Automated: mentions debug + br create count</td>
+</tr>
+<tr>
+<td>B4 — Learning Capture</td>
+<td>Include specific lessons without being asked</td>
+<td>Automated: learning section in response or diff</td>
+</tr>
+</tbody>
+</table>
+<h3>1.5 Controls</h3>
+<ul>
+<li>Isolated temp workspace (no access to experiment metadata)</li>
+<li><code>EnterPlanMode</code>, <code>AskUserQuestion</code>, <code>ExitPlanMode</code> disallowed (no plan mode in <code>-p</code>)</li>
+<li><code>Agent</code>, <code>TaskCreate</code>, <code>TaskGet</code>, <code>TaskUpdate</code>, <code>TaskList</code> disallowed (prevents model routing to different tier)</li>
+<li><code>--effort medium</code> pinned for consistency</li>
+<li>Budget caps per model tier (haiku $1, sonnet $5, opus $15)</li>
+<li>Forbidden file-access enforcement via strace</li>
+<li>Independent <code>go test</code> verification of agent's fix</li>
+</ul>
+<h2>2. Results</h2>
+<h3>2.1 Model Summary</h3>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>N</th>
+<th>Avg Cost</th>
+<th>Avg Duration</th>
+<th>Tests Pass</th>
+<th>Model Purity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>haiku</td>
+<td>12</td>
+<td>$0.161</td>
+<td>146s</td>
+<td>100%</td>
+<td>100%</td>
+</tr>
+<tr>
+<td>opus</td>
+<td>12</td>
+<td>$0.697</td>
+<td>275s</td>
+<td>100%</td>
+<td>100%</td>
+</tr>
+<tr>
+<td>sonnet</td>
+<td>12</td>
+<td>$0.686</td>
+<td>259s</td>
+<td>92%</td>
+<td>100%</td>
+</tr>
+</tbody>
+</table>
+<h3>2.2 Results by Condition (Across All Models)</h3>
+<table>
+<thead>
+<tr>
+<th>Condition</th>
+<th>N</th>
+<th>Tests Pass</th>
+<th>B1 Rationale</th>
+<th>B3 Debug Mentioned</th>
+<th>B3 br creates</th>
+<th>B4 Learning</th>
+<th>B2 Runbook Modified</th>
+<th>Avg Code</th>
+<th>Avg Docs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>conventional</td>
+<td>9</td>
+<td>100%</td>
+<td>8/9</td>
+<td>6/9</td>
+<td>6</td>
+<td>9/9</td>
+<td>5/9</td>
+<td>62</td>
+<td>33</td>
+</tr>
+<tr>
+<td>minimal</td>
+<td>9</td>
+<td>100%</td>
+<td>8/9</td>
+<td>1/9</td>
+<td>0</td>
+<td>3/9</td>
+<td>4/9</td>
+<td>68</td>
+<td>11</td>
+</tr>
+<tr>
+<td>mythology-only</td>
+<td>9</td>
+<td>89%</td>
+<td>8/9</td>
+<td>0/9</td>
+<td>0</td>
+<td>0/9</td>
+<td>4/9</td>
+<td>72</td>
+<td>11</td>
+</tr>
+<tr>
+<td>mythology-withexamples</td>
+<td>9</td>
+<td>100%</td>
+<td>8/9</td>
+<td>0/9</td>
+<td>0</td>
+<td>5/9</td>
+<td>5/9</td>
+<td>107</td>
+<td>22</td>
+</tr>
+</tbody>
+</table>
+<h3>2.3 Full Condition × Model Breakdown</h3>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Condition</th>
+<th>N</th>
+<th>Avg Cost</th>
+<th>Avg Duration</th>
+<th>Tests Pass</th>
+<th>B1 Rationale</th>
+<th>B3 Debug</th>
+<th>B3 br create</th>
+<th>B4 Learning</th>
+<th>Avg Code Lines</th>
+<th>Avg Doc Lines</th>
+<th>Code:Doc</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>haiku</td>
+<td>conventional</td>
+<td>3</td>
+<td>$0.206</td>
+<td>197s</td>
+<td>100%</td>
+<td>3/3</td>
+<td>1/3</td>
+<td>0</td>
+<td>3/3</td>
+<td>41</td>
+<td>88</td>
+<td>0.47</td>
+</tr>
+<tr>
+<td>haiku</td>
+<td>minimal</td>
+<td>3</td>
+<td>$0.182</td>
+<td>161s</td>
+<td>100%</td>
+<td>3/3</td>
+<td>0/3</td>
+<td>0</td>
+<td>1/3</td>
+<td>26</td>
+<td>20</td>
+<td>1.32</td>
+</tr>
+<tr>
+<td>haiku</td>
+<td>mythology-only</td>
+<td>3</td>
+<td>$0.116</td>
+<td>101s</td>
+<td>100%</td>
+<td>3/3</td>
+<td>0/3</td>
+<td>0</td>
+<td>0/3</td>
+<td>32</td>
+<td>21</td>
+<td>1.53</td>
+</tr>
+<tr>
+<td>haiku</td>
+<td>mythology-withexamples</td>
+<td>3</td>
+<td>$0.138</td>
+<td>125s</td>
+<td>100%</td>
+<td>3/3</td>
+<td>0/3</td>
+<td>0</td>
+<td>0/3</td>
+<td>33</td>
+<td>48</td>
+<td>0.7</td>
+</tr>
+<tr>
+<td>opus</td>
+<td>conventional</td>
+<td>3</td>
+<td>$0.699</td>
+<td>282s</td>
+<td>100%</td>
+<td>3/3</td>
+<td>2/3</td>
+<td>0</td>
+<td>3/3</td>
+<td>76</td>
+<td>8</td>
+<td>9.87</td>
+</tr>
+<tr>
+<td>opus</td>
+<td>minimal</td>
+<td>3</td>
+<td>$0.633</td>
+<td>244s</td>
+<td>100%</td>
+<td>3/3</td>
+<td>1/3</td>
+<td>0</td>
+<td>1/3</td>
+<td>137</td>
+<td>8</td>
+<td>17.08</td>
+</tr>
+<tr>
+<td>opus</td>
+<td>mythology-only</td>
+<td>3</td>
+<td>$0.756</td>
+<td>298s</td>
+<td>100%</td>
+<td>3/3</td>
+<td>0/3</td>
+<td>0</td>
+<td>0/3</td>
+<td>134</td>
+<td>8</td>
+<td>16.04</td>
+</tr>
+<tr>
+<td>opus</td>
+<td>mythology-withexamples</td>
+<td>3</td>
+<td>$0.702</td>
+<td>278s</td>
+<td>100%</td>
+<td>2/3</td>
+<td>0/3</td>
+<td>0</td>
+<td>2/3</td>
+<td>153</td>
+<td>7</td>
+<td>20.91</td>
+</tr>
+<tr>
+<td>sonnet</td>
+<td>conventional</td>
+<td>3</td>
+<td>$0.496</td>
+<td>190s</td>
+<td>100%</td>
+<td>2/3</td>
+<td>3/3</td>
+<td>6</td>
+<td>3/3</td>
+<td>68</td>
+<td>4</td>
+<td>18.45</td>
+</tr>
+<tr>
+<td>sonnet</td>
+<td>minimal</td>
+<td>3</td>
+<td>$0.526</td>
+<td>157s</td>
+<td>100%</td>
+<td>2/3</td>
+<td>0/3</td>
+<td>0</td>
+<td>1/3</td>
+<td>41</td>
+<td>4</td>
+<td>10.25</td>
+</tr>
+<tr>
+<td>sonnet</td>
+<td>mythology-only</td>
+<td>3</td>
+<td>$0.453</td>
+<td>194s</td>
+<td>67%</td>
+<td>2/3</td>
+<td>0/3</td>
+<td>0</td>
+<td>0/3</td>
+<td>51</td>
+<td>4</td>
+<td>11.77</td>
+</tr>
+<tr>
+<td>sonnet</td>
+<td>mythology-withexamples</td>
+<td>3</td>
+<td>$1.27</td>
+<td>495s</td>
+<td>100%</td>
+<td>3/3</td>
+<td>0/3</td>
+<td>0</td>
+<td>3/3</td>
+<td>134</td>
+<td>12</td>
+<td>11.17</td>
+</tr>
+</tbody>
+</table>
+<h3>2.4 Change Composition</h3>
+<p>The code-to-documentation ratio reveals how agents allocate effort between fixing the bug and generating surrounding documentation.</p>
+<table>
+<thead>
+<tr>
+<th>Condition</th>
+<th>Total Code Lines</th>
+<th>Total Doc Lines</th>
+<th>Code:Doc Ratio</th>
+<th>Avg Files Created</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>conventional</td>
+<td>554</td>
+<td>298</td>
+<td>1.86</td>
+<td>0.2</td>
+</tr>
+<tr>
+<td>minimal</td>
+<td>611</td>
+<td>95</td>
+<td>6.43</td>
+<td>2.3</td>
+</tr>
+<tr>
+<td>mythology-only</td>
+<td>649</td>
+<td>100</td>
+<td>6.49</td>
+<td>0.1</td>
+</tr>
+<tr>
+<td>mythology-withexamples</td>
+<td>962</td>
+<td>201</td>
+<td>4.79</td>
+<td>0.3</td>
+</tr>
+</tbody>
+</table>
+<h3>2.5 Per-Run Detail</h3>
+<table>
+<thead>
+<tr>
+<th>Run</th>
+<th>Model</th>
+<th>Condition</th>
+<th>Cost</th>
+<th>Tests</th>
+<th>B1</th>
+<th>B3 Debug</th>
+<th>B3 br</th>
+<th>B4</th>
+<th>Code</th>
+<th>Docs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>haiku/conventional-1</td>
+<td>haiku</td>
+<td>conventional</td>
+<td>$0.1</td>
+<td>PASS</td>
+<td>Y</td>
+<td>Y</td>
+<td>0</td>
+<td>Y</td>
+<td>19</td>
+<td>0</td>
+</tr>
+<tr>
+<td>haiku/conventional-2</td>
+<td>haiku</td>
+<td>conventional</td>
+<td>$0.36</td>
+<td>PASS</td>
+<td>Y</td>
+<td>N</td>
+<td>0</td>
+<td>Y</td>
+<td>70</td>
+<td>264</td>
+</tr>
+<tr>
+<td>haiku/conventional-3</td>
+<td>haiku</td>
+<td>conventional</td>
+<td>$0.16</td>
+<td>PASS</td>
+<td>Y</td>
+<td>N</td>
+<td>0</td>
+<td>Y</td>
+<td>35</td>
+<td>0</td>
+</tr>
+<tr>
+<td>haiku/minimal-1</td>
+<td>haiku</td>
+<td>minimal</td>
+<td>$0.27</td>
+<td>PASS</td>
+<td>Y</td>
+<td>N</td>
+<td>0</td>
+<td>Y</td>
+<td>17</td>
+<td>59</td>
+</tr>
+<tr>
+<td>haiku/minimal-2</td>
+<td>haiku</td>
+<td>minimal</td>
+<td>$0.16</td>
+<td>PASS</td>
+<td>Y</td>
+<td>N</td>
+<td>0</td>
+<td>N</td>
+<td>34</td>
+<td>0</td>
+</tr>
+<tr>
+<td>haiku/minimal-3</td>
+<td>haiku</td>
+<td>minimal</td>
+<td>$0.13</td>
+<td>PASS</td>
+<td>Y</td>
+<td>N</td>
+<td>0</td>
+<td>N</td>
+<td>27</td>
+<td>0</td>
+</tr>
+<tr>
+<td>haiku/mythology-only-1</td>
+<td>haiku</td>
+<td>mythology-only</td>
+<td>$0.09</td>
+<td>PASS</td>
+<td>Y</td>
+<td>N</td>
+<td>0</td>
+<td>N</td>
+<td>14</td>
+<td>0</td>
+</tr>
+<tr>
+<td>haiku/mythology-only-2</td>
+<td>haiku</td>
+<td>mythology-only</td>
+<td>$0.15</td>
+<td>PASS</td>
+<td>Y</td>
+<td>N</td>
+<td>0</td>
+<td>N</td>
+<td>44</td>
+<td>62</td>
+</tr>
+<tr>
+<td>haiku/mythology-only-3</td>
+<td>haiku</td>
+<td>mythology-only</td>
+<td>$0.11</td>
+<td>PASS</td>
+<td>Y</td>
+<td>N</td>
+<td>0</td>
+<td>N</td>
+<td>37</td>
+<td>0</td>
+</tr>
+<tr>
+<td>haiku/mythology-withexamples-1</td>
+<td>haiku</td>
+<td>mythology-withexamples</td>
+<td>$0.15</td>
+<td>PASS</td>
+<td>Y</td>
+<td>N</td>
+<td>0</td>
+<td>N</td>
+<td>24</td>
+<td>55</td>
+</tr>
+<tr>
+<td>haiku/mythology-withexamples-2</td>
+<td>haiku</td>
+<td>mythology-withexamples</td>
+<td>$0.16</td>
+<td>PASS</td>
+<td>Y</td>
+<td>N</td>
+<td>0</td>
+<td>N</td>
+<td>27</td>
+<td>88</td>
+</tr>
+<tr>
+<td>haiku/mythology-withexamples-3</td>
+<td>haiku</td>
+<td>mythology-withexamples</td>
+<td>$0.1</td>
+<td>PASS</td>
+<td>Y</td>
+<td>N</td>
+<td>0</td>
+<td>N</td>
+<td>49</td>
+<td>0</td>
+</tr>
+<tr>
+<td>opus/conventional-1</td>
+<td>opus</td>
+<td>conventional</td>
+<td>$0.71</td>
+<td>PASS</td>
+<td>Y</td>
+<td>N</td>
+<td>0</td>
+<td>Y</td>
+<td>115</td>
+<td>9</td>
+</tr>
+<tr>
+<td>opus/conventional-2</td>
+<td>opus</td>
+<td>conventional</td>
+<td>$0.67</td>
+<td>PASS</td>
+<td>Y</td>
+<td>Y</td>
+<td>0</td>
+<td>Y</td>
+<td>97</td>
+<td>8</td>
+</tr>
+<tr>
+<td>opus/conventional-3</td>
+<td>opus</td>
+<td>conventional</td>
+<td>$0.72</td>
+<td>PASS</td>
+<td>Y</td>
+<td>Y</td>
+<td>0</td>
+<td>Y</td>
+<td>15</td>
+<td>6</td>
+</tr>
+<tr>
+<td>opus/minimal-1</td>
+<td>opus</td>
+<td>minimal</td>
+<td>$0.83</td>
+<td>PASS</td>
+<td>Y</td>
+<td>N</td>
+<td>0</td>
+<td>Y</td>
+<td>163</td>
+<td>8</td>
+</tr>
+<tr>
+<td>opus/minimal-2</td>
+<td>opus</td>
+<td>minimal</td>
+<td>$0.58</td>
+<td>PASS</td>
+<td>Y</td>
+<td>Y</td>
+<td>0</td>
+<td>N</td>
+<td>176</td>
+<td>7</td>
+</tr>
+<tr>
+<td>opus/minimal-3</td>
+<td>opus</td>
+<td>minimal</td>
+<td>$0.49</td>
+<td>PASS</td>
+<td>Y</td>
+<td>N</td>
+<td>0</td>
+<td>N</td>
+<td>71</td>
+<td>9</td>
+</tr>
+<tr>
+<td>opus/mythology-only-1</td>
+<td>opus</td>
+<td>mythology-only</td>
+<td>$0.64</td>
+<td>PASS</td>
+<td>Y</td>
+<td>N</td>
+<td>0</td>
+<td>N</td>
+<td>68</td>
+<td>9</td>
+</tr>
+<tr>
+<td>opus/mythology-only-2</td>
+<td>opus</td>
+<td>mythology-only</td>
+<td>$1.05</td>
+<td>PASS</td>
+<td>Y</td>
+<td>N</td>
+<td>0</td>
+<td>N</td>
+<td>250</td>
+<td>9</td>
+</tr>
+<tr>
+<td>opus/mythology-only-3</td>
+<td>opus</td>
+<td>mythology-only</td>
+<td>$0.57</td>
+<td>PASS</td>
+<td>Y</td>
+<td>N</td>
+<td>0</td>
+<td>N</td>
+<td>83</td>
+<td>7</td>
+</tr>
+<tr>
+<td>opus/mythology-withexamples-1</td>
+<td>opus</td>
+<td>mythology-withexamples</td>
+<td>$0.76</td>
+<td>PASS</td>
+<td>Y</td>
+<td>N</td>
+<td>0</td>
+<td>Y</td>
+<td>209</td>
+<td>6</td>
+</tr>
+<tr>
+<td>opus/mythology-withexamples-2</td>
+<td>opus</td>
+<td>mythology-withexamples</td>
+<td>$0.66</td>
+<td>PASS</td>
+<td>Y</td>
+<td>N</td>
+<td>0</td>
+<td>Y</td>
+<td>73</td>
+<td>8</td>
+</tr>
+<tr>
+<td>opus/mythology-withexamples-3</td>
+<td>opus</td>
+<td>mythology-withexamples</td>
+<td>$0.69</td>
+<td>PASS</td>
+<td>N</td>
+<td>N</td>
+<td>0</td>
+<td>N</td>
+<td>178</td>
+<td>8</td>
+</tr>
+<tr>
+<td>sonnet/conventional-1</td>
+<td>sonnet</td>
+<td>conventional</td>
+<td>$0.58</td>
+<td>PASS</td>
+<td>Y</td>
+<td>Y</td>
+<td>2</td>
+<td>Y</td>
+<td>60</td>
+<td>0</td>
+</tr>
+<tr>
+<td>sonnet/conventional-2</td>
+<td>sonnet</td>
+<td>conventional</td>
+<td>$0.43</td>
+<td>PASS</td>
+<td>Y</td>
+<td>Y</td>
+<td>1</td>
+<td>Y</td>
+<td>72</td>
+<td>11</td>
+</tr>
+<tr>
+<td>sonnet/conventional-3</td>
+<td>sonnet</td>
+<td>conventional</td>
+<td>$0.48</td>
+<td>PASS</td>
+<td>N</td>
+<td>Y</td>
+<td>3</td>
+<td>Y</td>
+<td>71</td>
+<td>0</td>
+</tr>
+<tr>
+<td>sonnet/minimal-1</td>
+<td>sonnet</td>
+<td>minimal</td>
+<td>$0.8</td>
+<td>PASS</td>
+<td>N</td>
+<td>N</td>
+<td>0</td>
+<td>N</td>
+<td>41</td>
+<td>0</td>
+</tr>
+<tr>
+<td>sonnet/minimal-2</td>
+<td>sonnet</td>
+<td>minimal</td>
+<td>$0.41</td>
+<td>PASS</td>
+<td>Y</td>
+<td>N</td>
+<td>0</td>
+<td>N</td>
+<td>18</td>
+<td>12</td>
+</tr>
+<tr>
+<td>sonnet/minimal-3</td>
+<td>sonnet</td>
+<td>minimal</td>
+<td>$0.37</td>
+<td>PASS</td>
+<td>Y</td>
+<td>N</td>
+<td>0</td>
+<td>Y</td>
+<td>64</td>
+<td>0</td>
+</tr>
+<tr>
+<td>sonnet/mythology-only-1</td>
+<td>sonnet</td>
+<td>mythology-only</td>
+<td>$0.5</td>
+<td>PASS</td>
+<td>N</td>
+<td>N</td>
+<td>0</td>
+<td>N</td>
+<td>49</td>
+<td>6</td>
+</tr>
+<tr>
+<td>sonnet/mythology-only-2</td>
+<td>sonnet</td>
+<td>mythology-only</td>
+<td>$0.45</td>
+<td>PASS</td>
+<td>Y</td>
+<td>N</td>
+<td>0</td>
+<td>N</td>
+<td>65</td>
+<td>7</td>
+</tr>
+<tr>
+<td>sonnet/mythology-only-3</td>
+<td>sonnet</td>
+<td>mythology-only</td>
+<td>$0.41</td>
+<td>FAIL</td>
+<td>Y</td>
+<td>N</td>
+<td>0</td>
+<td>N</td>
+<td>39</td>
+<td>0</td>
+</tr>
+<tr>
+<td>sonnet/mythology-withexamples-1</td>
+<td>sonnet</td>
+<td>mythology-withexamples</td>
+<td>$1.45</td>
+<td>PASS</td>
+<td>Y</td>
+<td>N</td>
+<td>0</td>
+<td>Y</td>
+<td>91</td>
+<td>0</td>
+</tr>
+<tr>
+<td>sonnet/mythology-withexamples-2</td>
+<td>sonnet</td>
+<td>mythology-withexamples</td>
+<td>$1.03</td>
+<td>PASS</td>
+<td>Y</td>
+<td>N</td>
+<td>0</td>
+<td>Y</td>
+<td>77</td>
+<td>9</td>
+</tr>
+<tr>
+<td>sonnet/mythology-withexamples-3</td>
+<td>sonnet</td>
+<td>mythology-withexamples</td>
+<td>$1.34</td>
+<td>PASS</td>
+<td>Y</td>
+<td>N</td>
+<td>0</td>
+<td>Y</td>
+<td>234</td>
+<td>27</td>
+</tr>
+</tbody>
+</table>
+<h2>3. Discussion</h2>
+<h3>3.1 Primary Findings</h3>
+<p>The results contradict the experiment's central hypothesis. Mythology-based prompting did not improve agent ownership behaviors. On the two most differentiated dimensions — incidental finding tracking (B3) and unprompted learning capture (B4) — the conventional prompt with explicit behavioral instructions outperformed all mythology variants.</p>
+<h4>Finding 1: Mythology does not improve B3 (incidental finding tracking)</h4>
+<p>This was the primary test. The scenario contained a debug endpoint leaking API keys and auth headers, marked as "out of scope." The question was whether agents would notice it, flag it as a security concern, and track it formally.</p>
+<table>
+<thead>
+<tr>
+<th>Condition</th>
+<th>Debug Mentioned</th>
+<th>br create Count</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>conventional</td>
+<td>6/9</td>
+<td>6</td>
+</tr>
+<tr>
+<td>minimal</td>
+<td>1/9</td>
+<td>0</td>
+</tr>
+<tr>
+<td>mythology-only</td>
+<td>0/9</td>
+<td>0</td>
+</tr>
+<tr>
+<td>mythology-withexamples</td>
+<td>0/9</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>The conventional prompt produced debug endpoint awareness in 67% of runs. Both mythology variants scored <strong>zero</strong> — worse than even the minimal prompt (11%). This is the clearest signal in the experiment and directly contradicts the hypothesis that belief-based framing drives broader ownership awareness.</p>
+<p>Manual review confirmed the automated scoring: conventional runs that scored True genuinely identified the debug handler as a security risk (leaking <code>POLIS_API_KEY</code> and <code>Authorization</code> headers). Sonnet under the conventional condition was particularly strong, with all 3 runs flagging the issue and using <code>br create</code> to formally track it (averaging 2 <code>br create</code> calls per run). Opus conventional runs mentioned the issue in prose but did not use formal tracking tools.</p>
+<h4>Finding 2: Conventional prompting dominates B4 (learning capture)</h4>
+<table>
+<thead>
+<tr>
+<th>Condition</th>
+<th>Learning Section Present</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>conventional</td>
+<td>9/9 (100%)</td>
+</tr>
+<tr>
+<td>mythology-withexamples</td>
+<td>5/9 (56%)</td>
+</tr>
+<tr>
+<td>minimal</td>
+<td>3/9 (33%)</td>
+</tr>
+<tr>
+<td>mythology-only</td>
+<td>0/9 (0%)</td>
+</tr>
+</tbody>
+</table>
+<p>The conventional prompt achieved 100% learning capture across all three models. Mythology-only scored zero — the worst of all conditions, below even the 62-word minimal prompt. This is particularly notable because the Polis mythology includes a "Learning Over Results" Golden Truth that explicitly values documented learning.</p>
+<h4>Finding 3: Worked examples drive behavior, not mythology framing</h4>
+<p>The mythology-withexamples condition (mythology + generic worked examples) produced learning sections in 56% of runs, while mythology-only produced zero. Since the examples were generic (not scenario-specific), this suggests the behavioral scaffolding comes from <strong>seeing the expected output format</strong>, not from absorbing the belief system.</p>
+<p>Breaking this down by model reinforces the point:</p>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>mythology-only B4</th>
+<th>mythology-withexamples B4</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>haiku</td>
+<td>0/3</td>
+<td>0/3</td>
+</tr>
+<tr>
+<td>sonnet</td>
+<td>0/3</td>
+<td>3/3</td>
+</tr>
+<tr>
+<td>opus</td>
+<td>0/3</td>
+<td>2/3</td>
+</tr>
+</tbody>
+</table>
+<p>Haiku cannot leverage the examples at all. Sonnet and Opus can, but only when given concrete output patterns. The mythology framing alone produces no learning behavior on any model.</p>
+<h4>Finding 4: B1 and B2 are not differentiating</h4>
+<p><strong>B1 (Redis rationale)</strong> was saturated: 8/9 for every condition. All models, across all prompt framings, correctly identified that Redis distributed locking was over-scoped for a single-node deployment and provided workspace-grounded reasoning. This suggests proportionate requirement handling is a baseline capability that does not require special prompting.</p>
+<p><strong>B2 (Runbook modification)</strong> showed a model effect rather than a condition effect. Opus modified the runbook in 12/12 runs regardless of prompt condition, while Haiku modified it only under conventional (1/3). The behavior correlates with model capability, not prompt framing.</p>
+<h4>Finding 5: Model capability interacts with prompt condition</h4>
+<p>The strongest model-condition interaction appears in B3. Sonnet under the conventional prompt was the only cell to use <code>br create</code> for formal issue tracking (6 creates across 3 runs). Opus mentioned the debug endpoint in prose but never used the tracking tool. Haiku under conventional mentioned it in 1/3 runs.</p>
+<p>This suggests that the conventional prompt's explicit instruction to "track issues" resonated most with Sonnet's instruction-following behavior, while Opus incorporated the information into its narrative without formal tool use.</p>
+<p>For tests pass rate, the only failure was sonnet/mythology-only-3, where the agent's fix had a subtle lifecycle race: <code>Stop()</code> closed the channel but didn't wait for the goroutine to exit, allowing <code>Start()</code> to race during config reloads. All other 35 runs produced passing fixes.</p>
+<h3>3.2 Interpretation</h3>
+<p>The results suggest that for tool-enabled coding agents, <strong>explicit behavioral instructions outperform belief-based framing</strong>. The conventional prompt's 337 words of direct instruction ("track issues you notice outside your scope," "capture what you learned") produced more ownership behavior than 913-1142 words of mythology.</p>
+<p>Several mechanisms may explain this:</p>
+<ol>
+<li>
+<p><strong>Instruction specificity</strong>: The conventional prompt tells the agent exactly what to do. The mythology tells the agent who to be. In a single-session task with no relationship continuity, identity framing has no time to compound into behavioral patterns.</p>
+</li>
+<li>
+<p><strong>Attention dilution</strong>: Mythology prompts are 3-4× longer than the conventional prompt. The additional content may dilute attention from the behavioral signals embedded in the task, explaining why mythology-only actually performed <em>worse</em> than minimal on B3 and B4.</p>
+</li>
+<li>
+<p><strong>Example-driven behavior</strong>: The mythology-withexamples improvement over mythology-only (on B4) demonstrates that agents learn output patterns from examples, not from absorbing values. This is consistent with findings in few-shot prompting literature.</p>
+</li>
+<li>
+<p><strong>Model ceiling effects</strong>: Opus's high baseline on B2 (runbook modification) regardless of prompt suggests that stronger models already exhibit some ownership behaviors intrinsically. The marginal value of prompting is highest for mid-tier models on specific, actionable dimensions.</p>
+</li>
+</ol>
+<h3>3.3 Implications for Polis</h3>
+<p>These results do not invalidate mythology as a concept, but they constrain where it adds value:</p>
+<ol>
+<li>
+<p><strong>Single-session tasks are a weak test of belief systems.</strong> Mythology may matter more in long-running agent sessions where identity framing compounds through repeated decisions. This experiment's isolated, single-task design cannot capture that effect.</p>
+</li>
+<li>
+<p><strong>Mythology needs explicit behavioral bridges.</strong> The mythology-withexamples improvement shows that abstract values require concrete translation. Future mythology iterations should include worked examples for each Golden Truth, showing what the behavior looks like in practice.</p>
+</li>
+<li>
+<p><strong>Conventional prompting is a strong baseline.</strong> For task-specific behavioral shaping, direct instructions with examples are more reliable than belief-based framing. Mythology may still serve a different purpose — organizational identity, cross-agent consistency, cultural coherence — but this experiment measures none of those.</p>
+</li>
+<li>
+<p><strong>B3 tracking requires tool-use prompting.</strong> The <code>br create</code> gap (conventional/sonnet: 6, everything else: 0) suggests that agents need explicit instruction to use tracking tools for incidental findings. Mythology's "Track Where It Lives" truth was not sufficient to trigger tool-use for side discoveries.</p>
+</li>
+</ol>
+<h3>3.4 Known Limitations</h3>
+<ul>
+<li><strong>Prompt length confound</strong>: Mythology prompts are 15× longer than minimal and 3× longer than conventional. Observed differences could partially reflect attention dilution rather than framing ineffectiveness. A length-matched control would strengthen the finding.</li>
+<li><strong>Single scenario</strong>: Results may not generalize to different task types, codebases, or multi-step workflows. The scenario was specifically designed with embedded behavioral signals that may not represent typical agent work.</li>
+<li><strong>N=3 per cell</strong>: Sample sizes are small; results should be interpreted as directional. The B3 signal (6/9 vs 0/18) is strong enough to be meaningful despite small N, but B4 differences between minimal (3/9) and mythology-withexamples (5/9) are not.</li>
+<li><strong>Automated scoring is approximate</strong>: Boolean hint signals are proxies for the rubric's 0-2 scales. Manual review of three key cells confirmed the automated scoring was accurate for B3 and B4, but edge cases exist (e.g., mentioning the debug endpoint without flagging it as a security concern).</li>
+<li><strong>Single Claude Code version</strong>: All runs used version 2.1.63. Behavioral patterns may differ across Claude Code versions due to system prompt changes, tool availability, or output formatting.</li>
+</ul>
+<h2>4. Methodology Notes</h2>
+<h3>4.1 Containment</h3>
+<p>All runs used isolated temp workspaces. Strace-based file access analysis confirmed no agent accessed experiment metadata (scoring rubric, design docs, hypothesis, other runs).</p>
+<h3>4.2 Model Purity</h3>
+<p>Model routing was controlled by disabling the <code>Agent</code>, <code>TaskCreate</code>, <code>TaskGet</code>, <code>TaskUpdate</code>, and <code>TaskList</code> tools (which could spawn subagents on different model tiers). All 36 runs achieved 100% model purity — the <code>modelUsage</code> keys in each run's result.json matched the requested model with no cross-tier contamination.</p>
+<h3>4.3 Reproducibility</h3>
+<ul>
+<li>Claude Code version captured per run</li>
+<li>All run parameters recorded in <code>meta.json</code></li>
+<li>Complete workspace snapshots preserved in <code>workspace-after.tgz</code></li>
+<li>Response text extracted to <code>response.txt</code> for scoring convenience</li>
+</ul>
+<hr />
+<h2>5. Reproducibility</h2>
+<p>All experiment materials — scenario code, prompt variants, run scripts, raw results, and analysis tooling — are publicly available:</p>
+<p><strong>Repository</strong>: <a href="https://github.com/polisorg/hestia-experiments">github.com/polisorg/hestia-experiments</a>
+<strong>Experiment path</strong>: `lab/experiments/003-mythology-impact-v2-20260226/`</p>
+<p>To reproduce:</p>
+<p>```bash
+git clone https://github.com/polisorg/hestia-experiments.git
+cd hestia-experiments/lab/experiments/003-mythology-impact-v2-20260226</p>
+<h1>Run one condition</h1>
+<p>./scripts/run-sealed.sh minimal 1 ./prompts/system-minimal.txt haiku</p>
+<h1>Run full matrix</h1>
+<p>./scripts/run-full-matrix.sh 3</p>
+<h1>Analyze and generate report</h1>
+<p>./scripts/analyze-results.sh
+./scripts/generate-report.sh
+./scripts/make-pdf.sh
+```</p>
+<p>Each run produces: `result.json` (raw Claude output), `response.txt` (extracted text), `workspace.diff` (code changes), `verify-fix.json` (independent test verification), `scoring-hints.json` (automated behavioral signals), and `diff-summary.json` (change composition analysis).</p>
+<hr />
+<p><em>Generated by Hestia's experiment analysis pipeline.</em></p></body></html>

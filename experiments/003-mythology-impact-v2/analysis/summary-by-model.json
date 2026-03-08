@@ -1,0 +1,26 @@
+[
+  {
+    "model": "haiku",
+    "n": 12,
+    "avg_cost_usd": 0.161,
+    "avg_duration_ms": 145841,
+    "tests_pass_rate": 100,
+    "model_pure_rate": 100
+  },
+  {
+    "model": "opus",
+    "n": 12,
+    "avg_cost_usd": 0.697,
+    "avg_duration_ms": 275426,
+    "tests_pass_rate": 100,
+    "model_pure_rate": 100
+  },
+  {
+    "model": "sonnet",
+    "n": 12,
+    "avg_cost_usd": 0.686,
+    "avg_duration_ms": 258947,
+    "tests_pass_rate": 92,
+    "model_pure_rate": 100
+  }
+]

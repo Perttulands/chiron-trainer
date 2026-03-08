@@ -1,0 +1,6 @@
+Experiment: 003-evolution (4 cells)
+Warning: Model "qwen3.5:9b-t03" not found for provider "ollama". Using custom model id.
+2026/03/08 21:54:48 [1/4][25%] model=qwen3.5:9b-t03 condition=v8-champion-r1 replica=1 turns=29 wall=346s
+Warning: Model "qwen3.5:9b-t03" not found for provider "ollama". Using custom model id.
+2026/03/08 22:11:18 [2/4][50%] model=qwen3.5:9b-t03 condition=v8-champion-r2 replica=1 turns=45 wall=990s
+Warning: Model "qwen3.5:9b-t03" not found for provider "ollama". Using custom model id.

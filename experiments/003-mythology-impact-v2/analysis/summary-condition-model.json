@@ -1,0 +1,164 @@
+{
+  "conventional/haiku": {
+    "n": 3,
+    "avg_B1": 2.0,
+    "avg_B2": 2.0,
+    "avg_B3": 0.0,
+    "avg_B4": 2.0,
+    "avg_total": 6.0,
+    "avg_cost": 0.2059
+  },
+  "conventional/opus": {
+    "n": 3,
+    "avg_B1": 2.0,
+    "avg_B2": 2.0,
+    "avg_B3": 0.67,
+    "avg_B4": 2.0,
+    "avg_total": 6.67,
+    "avg_cost": 0.6987
+  },
+  "conventional/sonnet": {
+    "n": 3,
+    "avg_B1": 2.0,
+    "avg_B2": 2.0,
+    "avg_B3": 2.0,
+    "avg_B4": 2.0,
+    "avg_total": 8.0,
+    "avg_cost": 0.4959
+  },
+  "experienced/haiku": {
+    "n": 3,
+    "avg_B1": 2.0,
+    "avg_B2": 2.0,
+    "avg_B3": 0.0,
+    "avg_B4": 0.0,
+    "avg_total": 4.0,
+    "avg_cost": 0.329
+  },
+  "experienced/opus": {
+    "n": 3,
+    "avg_B1": 2.0,
+    "avg_B2": 2.0,
+    "avg_B3": 2.0,
+    "avg_B4": 0.0,
+    "avg_total": 6.0,
+    "avg_cost": 0.771
+  },
+  "experienced/sonnet": {
+    "n": 3,
+    "avg_B1": 1.33,
+    "avg_B2": 2.0,
+    "avg_B3": 1.33,
+    "avg_B4": 0.0,
+    "avg_total": 4.67,
+    "avg_cost": 1.8496
+  },
+  "minimal/haiku": {
+    "n": 3,
+    "avg_B1": 2.0,
+    "avg_B2": 2.0,
+    "avg_B3": 0.0,
+    "avg_B4": 0.33,
+    "avg_total": 4.33,
+    "avg_cost": 0.1822
+  },
+  "minimal/opus": {
+    "n": 3,
+    "avg_B1": 2.0,
+    "avg_B2": 2.0,
+    "avg_B3": 0.33,
+    "avg_B4": 0.33,
+    "avg_total": 4.67,
+    "avg_cost": 0.6333
+  },
+  "minimal/sonnet": {
+    "n": 3,
+    "avg_B1": 1.33,
+    "avg_B2": 2.0,
+    "avg_B3": 0.0,
+    "avg_B4": 0.67,
+    "avg_total": 4.0,
+    "avg_cost": 0.5261
+  },
+  "mythology-only/haiku": {
+    "n": 3,
+    "avg_B1": 2.0,
+    "avg_B2": 2.0,
+    "avg_B3": 0.0,
+    "avg_B4": 0.0,
+    "avg_total": 4.0,
+    "avg_cost": 0.1158
+  },
+  "mythology-only/opus": {
+    "n": 3,
+    "avg_B1": 2.0,
+    "avg_B2": 2.0,
+    "avg_B3": 0.0,
+    "avg_B4": 0.0,
+    "avg_total": 4.0,
+    "avg_cost": 0.7556
+  },
+  "mythology-only/sonnet": {
+    "n": 3,
+    "avg_B1": 2.0,
+    "avg_B2": 2.0,
+    "avg_B3": 0.0,
+    "avg_B4": 0.0,
+    "avg_total": 4.0,
+    "avg_cost": 0.4527
+  },
+  "mythology-withexamples/haiku": {
+    "n": 3,
+    "avg_B1": 2.0,
+    "avg_B2": 2.0,
+    "avg_B3": 0.0,
+    "avg_B4": 0.0,
+    "avg_total": 4.0,
+    "avg_cost": 0.1383
+  },
+  "mythology-withexamples/opus": {
+    "n": 3,
+    "avg_B1": 1.33,
+    "avg_B2": 2.0,
+    "avg_B3": 0.0,
+    "avg_B4": 1.33,
+    "avg_total": 4.67,
+    "avg_cost": 0.7022
+  },
+  "mythology-withexamples/sonnet": {
+    "n": 3,
+    "avg_B1": 2.0,
+    "avg_B2": 2.0,
+    "avg_B3": 0.0,
+    "avg_B4": 2.0,
+    "avg_total": 6.0,
+    "avg_cost": 1.2705
+  },
+  "polis/haiku": {
+    "n": 3,
+    "avg_B1": 2.0,
+    "avg_B2": 2.0,
+    "avg_B3": 0.0,
+    "avg_B4": 0.67,
+    "avg_total": 4.67,
+    "avg_cost": 0.2278
+  },
+  "polis/opus": {
+    "n": 3,
+    "avg_B1": 2.0,
+    "avg_B2": 2.0,
+    "avg_B3": 1.0,
+    "avg_B4": 0.0,
+    "avg_total": 5.0,
+    "avg_cost": 0.7393
+  },
+  "polis/sonnet": {
+    "n": 3,
+    "avg_B1": 1.33,
+    "avg_B2": 2.0,
+    "avg_B3": 0.67,
+    "avg_B4": 0.0,
+    "avg_total": 4.0,
+    "avg_cost": 1.1786
+  }
+}

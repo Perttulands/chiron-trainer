@@ -1,0 +1,50 @@
+[
+  {
+    "condition": "conventional",
+    "n": 9,
+    "b3_mentions_debug": 6,
+    "b3_br_creates": 6,
+    "b4_has_learning": 9,
+    "b1_has_rationale": 8,
+    "b2_runbook_modified": 5,
+    "avg_code_lines": 62,
+    "avg_doc_lines": 33,
+    "tests_pass_rate": 100
+  },
+  {
+    "condition": "minimal",
+    "n": 9,
+    "b3_mentions_debug": 1,
+    "b3_br_creates": 0,
+    "b4_has_learning": 3,
+    "b1_has_rationale": 8,
+    "b2_runbook_modified": 4,
+    "avg_code_lines": 68,
+    "avg_doc_lines": 11,
+    "tests_pass_rate": 100
+  },
+  {
+    "condition": "mythology-only",
+    "n": 9,
+    "b3_mentions_debug": 0,
+    "b3_br_creates": 0,
+    "b4_has_learning": 0,
+    "b1_has_rationale": 8,
+    "b2_runbook_modified": 4,
+    "avg_code_lines": 72,
+    "avg_doc_lines": 11,
+    "tests_pass_rate": 89
+  },
+  {
+    "condition": "mythology-withexamples",
+    "n": 9,
+    "b3_mentions_debug": 0,
+    "b3_br_creates": 0,
+    "b4_has_learning": 5,
+    "b1_has_rationale": 8,
+    "b2_runbook_modified": 5,
+    "avg_code_lines": 107,
+    "avg_doc_lines": 22,
+    "tests_pass_rate": 100
+  }
+]

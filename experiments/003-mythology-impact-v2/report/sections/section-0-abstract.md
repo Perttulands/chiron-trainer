@@ -1,0 +1,11 @@
+# How System Prompt Framing Shapes AI Coding Agent Behavior: An Empirical Study of Delivery Vehicles for Behavioral Targets
+
+**Perttu Landström & Hestia**
+
+## Abstract
+
+AI coding agents receive behavioral guidance through system prompts, yet there is little empirical understanding of whether the *format* of that guidance — not just its content — affects what agents actually do. We present a controlled experiment testing six system prompt conditions that encode the same four behavioral targets (premise challenge, structural fixing, incidental finding detection, learning capture) using five delivery vehicles: minimal instruction, conventional role-with-examples, values framing, values-with-examples, and first-person failure memories. 54 sealed runs were executed across three Claude-family models (Haiku, Sonnet, Opus), each working on the same Go debugging task with four planted behavioral signals.
+
+The results demonstrate that the delivery vehicle matters at least as much as the targets themselves. First-person experience memories produced the highest rate of incidental security finding detection (56% vs 33% for explicit instructions) but completely failed at output format compliance (0% vs 100%). Values-based prompts without worked examples actively suppressed desirable behaviors, performing worse than a four-sentence minimal prompt. Combining all vehicles (identity + values + experience) produced signal dilution, not amplification.
+
+Extended workspace diff analysis revealed behavioral dimensions invisible to the original scoring rubric. Most strikingly, mid-capability models (Sonnet) show a sharp engineering depth transition: conditions with values-framed examples or experience memories unlock deep lifecycle fixes (done-channel synchronization, 3/3) that are completely absent in conventional and minimal conditions (0/3) — despite the conventional condition achieving the highest rubric score. The highest-compliance prompt produced the shallowest engineering. These findings have implications for agent system design, learning loop architecture, and prompt engineering methodology. The format of agent guidance is not a stylistic choice — it is a design parameter that independently shapes behavioral outcomes.

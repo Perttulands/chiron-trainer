@@ -1,0 +1,81 @@
+[19:10:50] Waiting for Round 5...
+[19:30:20] Round 5 complete
+=== R5 RESULTS ===
+v5-champion-refined-1          turns=45  edits=4   diff=304  br=0
+0 wall=467s
+v5-micro-checklist-1           turns=26  edits=6   diff=348  br=0
+0 wall=367s
+v5-no-wrong-example-1          turns=10  edits=2   diff=128  br=0
+0 wall=204s
+v5-test-driven-1               turns=27  edits=0   diff=0    br=0
+0 wall=164s
+
+[19:30:20] === ROUND 6: Stability test — run champion 3x ===
+[19:30:20] Running experiment...
+Experiment: 003-evolution (4 cells)
+2026/03/08 19:36:09 [1/4][25%] model=qwen3.5:9b-full condition=v6-champion-r1 replica=1 turns=28 wall=348s
+2026/03/08 19:46:48 [2/4][50%] model=qwen3.5:9b-full condition=v6-champion-r2 replica=1 turns=61 wall=638s
+2026/03/08 19:51:02 [3/4][75%] model=qwen3.5:9b-full condition=v6-champion-r3 replica=1 turns=22 wall=253s
+2026/03/08 19:55:25 [4/4][100%] model=qwen3.5:9b-full condition=v6-micro-r1 replica=1 turns=32 wall=263s
+
+Completed: 4/4 cells
+=== R6 RESULTS (stability test) ===
+v6-champion-r1-1               turns=28  edits=2   diff=19   br=0
+0 wall=348s
+v6-champion-r2-1               turns=61  edits=23  diff=186  br=0
+0 wall=638s
+v6-champion-r3-1               turns=22  edits=5   diff=191  br=0
+0 wall=253s
+v6-micro-r1-1                  turns=32  edits=5   diff=86   br=0
+0 wall=263s
+
+[19:55:25] === ROUND 7: Champion with temp variations ===
+[19:55:26] Running experiment...
+Experiment: 003-evolution (4 cells)
+Warning: Model "qwen3.5:9b-t03" not found for provider "ollama". Using custom model id.
+2026/03/08 19:59:27 [1/4][25%] model=qwen3.5:9b-t03 condition=v7-champion replica=1 turns=18 wall=241s
+Warning: Model "qwen3.5:9b-t05" not found for provider "ollama". Using custom model id.
+2026/03/08 20:03:02 [2/4][50%] model=qwen3.5:9b-t05 condition=v7-champion replica=1 turns=26 wall=214s
+2026/03/08 20:17:13 [3/4][75%] model=qwen3.5:9b-full condition=v7-champion replica=1 turns=102 wall=850s
+Warning: Model "qwen3.5:9b-t09" not found for provider "ollama". Using custom model id.
+2026/03/08 21:11:32 [4/4][100%] model=qwen3.5:9b-t09 condition=v7-champion replica=1 turns=60 wall=3259s
+
+Completed: 4/4 cells
+=== R7 RESULTS (temperature sensitivity) ===
+qwen3.5:9b-full           turns=102 edits=21  diff=242  wall=850s
+qwen3.5:9b-t03            turns=18  edits=2   diff=218  wall=241s
+qwen3.5:9b-t05            turns=26  edits=2   diff=112  wall=214s
+qwen3.5:9b-t09            turns=60  edits=23  diff=87   wall=3259s
+
+[21:11:32] === Rounds 5-7 complete ===
+R8-10 reserved for final refinement based on accumulated data.
+Review LAB-BOOK.md and accumulated results.
+
+=== ALL RESULTS SUMMARY ===
+v1-action-biased-1             turns=41  edits=3   diff=262  wall=614s
+v1-baseline-1                  turns=8   edits=0   diff=0    wall=150s
+v1-structured-steps-1          turns=10  edits=0   diff=0    wall=177s
+v1-tool-first-1                turns=37  edits=16  diff=40   wall=366s
+v2-action-compact-1            turns=13  edits=4   diff=36   wall=123s
+v2-checklist-agent-1           turns=42  edits=13  diff=253  wall=504s
+v2-example-driven-1            turns=32  edits=6   diff=109  wall=302s
+v2-tool-first-plus-1           turns=41  edits=1   diff=11   wall=465s
+v3-checklist-br-exact-1        turns=40  edits=6   diff=77   wall=281s
+v3-checklist-compact-1         turns=40  edits=2   diff=408  wall=474s
+v3-checklist-example-1         turns=25  edits=5   diff=173  wall=283s
+v3-ultra-compact-1             turns=57  edits=13  diff=17   wall=535s
+v4-br-hammer-1                 turns=8   edits=0   diff=0    wall=190s
+v4-champion-blend-1            turns=25  edits=10  diff=121  wall=224s
+v4-micro-1                     turns=21  edits=9   diff=101  wall=152s
+v4-structured-checklist-1      turns=56  edits=0   diff=132  wall=460s
+v5-champion-refined-1          turns=45  edits=4   diff=304  wall=467s
+v5-micro-checklist-1           turns=26  edits=6   diff=348  wall=367s
+v5-no-wrong-example-1          turns=10  edits=2   diff=128  wall=204s
+v5-test-driven-1               turns=27  edits=0   diff=0    wall=164s
+v6-champion-r1-1               turns=28  edits=2   diff=19   wall=348s
+v6-champion-r2-1               turns=61  edits=23  diff=186  wall=638s
+v6-champion-r3-1               turns=22  edits=5   diff=191  wall=253s
+v6-micro-r1-1                  turns=32  edits=5   diff=86   wall=263s
+v7-champion-1                  turns=102 edits=21  diff=242  wall=850s
+
+[21:11:32] Evolution rounds 5-7 complete. Ready for 8-10.

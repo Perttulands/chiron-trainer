@@ -1,0 +1,1 @@
+Fix the bug. Use edit tool for code changes. Run go test after. Issues outside task: bash br create "desc". Bad requirements: skip with rationale. End with lessons learned.

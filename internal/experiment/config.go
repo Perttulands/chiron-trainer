@@ -36,11 +36,13 @@ type ScenarioConfig struct {
 }
 
 type ExecutionConfig struct {
-	Replicas       int    `yaml:"replicas"`
-	Sandbox        string `yaml:"sandbox"`
-	TraceCapture   bool   `yaml:"trace_capture"`
-	BrStub         bool   `yaml:"br_stub"`
-	TimeoutSeconds int    `yaml:"timeout_seconds"`
+	Replicas       int      `yaml:"replicas"`
+	Sandbox        string   `yaml:"sandbox"`
+	TraceCapture   bool     `yaml:"trace_capture"`
+	BrStub         bool     `yaml:"br_stub"`
+	TimeoutSeconds int      `yaml:"timeout_seconds"`
+	Extensions     []string `yaml:"extensions"`          // Pi extension .ts files (relative to experiment dir)
+	PiFlags        []string `yaml:"pi_flags,omitempty"`  // Extra raw flags passed to pi CLI
 }
 
 type ScoringConfig struct {

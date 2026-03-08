@@ -15,10 +15,12 @@ import (
 
 // Config holds sandbox execution parameters.
 type Config struct {
-	Engine  string        // "bwrap" | "none"
-	Tools   []string      // Pi tool allowlist
-	BrStub  bool          // inject br stub binary
-	Timeout time.Duration
+	Engine     string        // "bwrap" | "none"
+	Tools      []string      // Pi tool allowlist
+	BrStub     bool          // inject br stub binary
+	Timeout    time.Duration
+	Extensions []string      // Absolute paths to Pi extension .ts files
+	PiFlags    []string      // Extra raw flags passed to pi CLI
 }
 
 // RunResult captures the outcome of a sandboxed pi run.
@@ -146,7 +148,7 @@ echo "br-stub: logged invocation"
 	// ------------------------------------------------------------------ //
 	// 7. Pi command arguments
 	// ------------------------------------------------------------------ //
-	piArgs := buildPiArgs(provider, model, systemPrompt, cfg.Tools)
+	piArgs := buildPiArgs(provider, model, systemPrompt, cfg.Tools, cfg.Extensions, cfg.PiFlags)
 
 	// ------------------------------------------------------------------ //
 	// 8/9. Execute
@@ -281,6 +283,22 @@ func BuildBwrapArgs(cfg Config, workspace, fakeHome, workParent, goRoot, sandbox
 		nodeLibModules := filepath.Join(filepath.Dir(nodeDir), "lib", "node_modules")
 		if _, err := os.Stat(nodeLibModules); err == nil {
 			args = append(args, "--ro-bind", nodeLibModules, nodeLibModules)
+		}
+	}
+
+	// Extension files (read-only bind mounts)
+	extDirs := map[string]bool{} // deduplicate parent directories
+	for _, ext := range cfg.Extensions {
+		absExt, err := filepath.Abs(ext)
+		if err == nil {
+			// Bind the extension file itself
+			args = append(args, "--ro-bind", absExt, absExt)
+			// Bind the parent directory (for relative imports like ./themeMap.ts)
+			dir := filepath.Dir(absExt)
+			if !extDirs[dir] {
+				extDirs[dir] = true
+				args = append(args, "--ro-bind", dir, dir)
+			}
 		}
 	}
 
@@ -423,7 +441,7 @@ func countEdits(toolCalls []string) int {
 // Internal helpers
 // ------------------------------------------------------------------ //
 
-func buildPiArgs(provider, model, systemPrompt string, tools []string) []string {
+func buildPiArgs(provider, model, systemPrompt string, tools []string, extensions []string, extraFlags []string) []string {
 	args := []string{
 		"-p",
 		"--provider", provider,
@@ -431,14 +449,26 @@ func buildPiArgs(provider, model, systemPrompt string, tools []string) []string 
 		"--system-prompt", systemPrompt,
 		"--mode", "json",
 		"--no-session",
-		"--no-extensions",
 		"--no-skills",
 		"--no-prompt-templates",
 		"--no-themes",
 		"--thinking", "off",
 	}
+	if len(extensions) > 0 {
+		// When extensions are specified, use --no-extensions to disable
+		// auto-discovery but explicitly load each extension with -e.
+		args = append(args, "--no-extensions")
+		for _, ext := range extensions {
+			args = append(args, "-e", ext)
+		}
+	} else {
+		args = append(args, "--no-extensions")
+	}
 	if len(tools) > 0 {
 		args = append(args, "--tools", strings.Join(tools, ","))
+	}
+	if len(extraFlags) > 0 {
+		args = append(args, extraFlags...)
 	}
 	return args
 }

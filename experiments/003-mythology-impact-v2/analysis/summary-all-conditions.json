@@ -1,0 +1,74 @@
+{
+  "conventional": {
+    "n": 9,
+    "avg_B1": 2.0,
+    "avg_B2": 2.0,
+    "avg_B3": 0.89,
+    "avg_B4": 2.0,
+    "avg_total": 6.89,
+    "avg_cost": 0.4669,
+    "avg_turns": 28.9,
+    "avg_words": 538.0,
+    "tests_pass_rate": 1.0
+  },
+  "experienced": {
+    "n": 9,
+    "avg_B1": 1.78,
+    "avg_B2": 2.0,
+    "avg_B3": 1.11,
+    "avg_B4": 0.0,
+    "avg_total": 4.89,
+    "avg_cost": 0.9832,
+    "avg_turns": 41.3,
+    "avg_words": 377.6,
+    "tests_pass_rate": 1.0
+  },
+  "minimal": {
+    "n": 9,
+    "avg_B1": 1.78,
+    "avg_B2": 2.0,
+    "avg_B3": 0.11,
+    "avg_B4": 0.44,
+    "avg_total": 4.33,
+    "avg_cost": 0.4472,
+    "avg_turns": 30.7,
+    "avg_words": 296.7,
+    "tests_pass_rate": 1.0
+  },
+  "mythology-only": {
+    "n": 9,
+    "avg_B1": 2.0,
+    "avg_B2": 2.0,
+    "avg_B3": 0.0,
+    "avg_B4": 0.0,
+    "avg_total": 4.0,
+    "avg_cost": 0.4414,
+    "avg_turns": 25.1,
+    "avg_words": 281.1,
+    "tests_pass_rate": 0.89
+  },
+  "mythology-withexamples": {
+    "n": 9,
+    "avg_B1": 1.78,
+    "avg_B2": 2.0,
+    "avg_B3": 0.0,
+    "avg_B4": 1.11,
+    "avg_total": 4.89,
+    "avg_cost": 0.7037,
+    "avg_turns": 27.8,
+    "avg_words": 358.4,
+    "tests_pass_rate": 1.0
+  },
+  "polis": {
+    "n": 9,
+    "avg_B1": 1.78,
+    "avg_B2": 2.0,
+    "avg_B3": 0.56,
+    "avg_B4": 0.22,
+    "avg_total": 4.56,
+    "avg_cost": 0.7152,
+    "avg_turns": 34.7,
+    "avg_words": 318.9,
+    "tests_pass_rate": 1.0
+  }
+}

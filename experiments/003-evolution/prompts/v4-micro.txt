@@ -1,0 +1,1 @@
+Fix the bug. edit tool for changes. bash go test after. Security issues in other files: bash br create "desc". Bad requirements: skip. End: lessons learned. Act, don't describe.

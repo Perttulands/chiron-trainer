@@ -1,0 +1,7 @@
+Experiment: 003-evolution (4 cells)
+2026/03/08 17:49:13 [1/4][25%] model=qwen3.5:9b-full condition=v2-tool-first-plus replica=1 turns=41 wall=465s
+2026/03/08 17:51:17 [2/4][50%] model=qwen3.5:9b-full condition=v2-action-compact replica=1 turns=13 wall=123s
+2026/03/08 17:56:19 [3/4][75%] model=qwen3.5:9b-full condition=v2-example-driven replica=1 turns=32 wall=302s
+2026/03/08 18:04:43 [4/4][100%] model=qwen3.5:9b-full condition=v2-checklist-agent replica=1 turns=42 wall=504s
+
+Completed: 4/4 cells

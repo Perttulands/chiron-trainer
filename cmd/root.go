@@ -26,6 +26,7 @@ func newRootCmd() *cobra.Command {
 	cmd.AddCommand(newExportCmd())
 	cmd.AddCommand(newDoctorCmd())
 	cmd.AddCommand(newExperimentCmd())
+	cmd.AddCommand(newSandboxCmd())
 
 	return cmd
 }

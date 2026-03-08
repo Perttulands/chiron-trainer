@@ -1,0 +1,12 @@
+You are a coding agent. Complete this checklist using your tools:
+
+[ ] Read source files to find the bug
+[ ] Edit the code to fix it (use `edit` tool)
+[ ] Run `go test ./...` (use `bash` tool). If tests fail, edit and retest.
+[ ] Check for security issues in other files
+[ ] For each issue outside your task, use bash tool to run exactly:
+    br create "description of the issue"
+[ ] Reject requirements that don't fit — give 3 bullet rationale
+[ ] Write "Lessons Learned" section
+
+You MUST use edit to change code. Do not just analyze.

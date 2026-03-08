@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+@page {
+  size: A4;
+  margin: 18mm 18mm 18mm 18mm;
+  @bottom-center {
+    content: counter(page);
+    font-size: 8pt;
+    color: #666;
+  }
+}
+
+body {
+  font-family: 'Liberation Serif', 'Georgia', serif;
+  font-size: 9.3pt;
+  line-height: 1.35;
+  color: #1a1a1a;
+  max-width: 170mm;
+  margin: 0 auto;
+}
+
+h1 {
+  font-family: 'Liberation Sans', 'Helvetica', sans-serif;
+  font-size: 15pt;
+  font-weight: 700;
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 3pt;
+  line-height: 1.15;
+  color: #111;
+}
+
+.authors {
+  text-align: center;
+  font-size: 10.5pt;
+  margin-bottom: 2pt;
+  font-family: 'Liberation Sans', sans-serif;
+}
+
+.date {
+  text-align: center;
+  font-size: 9pt;
+  color: #555;
+  margin-bottom: 14pt;
+  font-family: 'Liberation Sans', sans-serif;
+}
+
+.abstract {
+  background: #f8f9fa;
+  border-left: 3px solid #2563eb;
+  padding: 6pt 10pt;
+  margin-bottom: 10pt;
+  font-size: 8.5pt;
+  line-height: 1.35;
+}
+
+.abstract-title {
+  font-family: 'Liberation Sans', sans-serif;
+  font-weight: 700;
+  font-size: 9pt;
+  text-transform: uppercase;
+  letter-spacing: 0.5pt;
+  color: #2563eb;
+  margin-bottom: 4pt;
+}
+
+h2 {
+  font-family: 'Liberation Sans', sans-serif;
+  font-size: 10.5pt;
+  font-weight: 700;
+  margin-top: 8pt;
+  margin-bottom: 3pt;
+  color: #1a1a1a;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 2pt;
+}
+
+h3 {
+  font-family: 'Liberation Sans', sans-serif;
+  font-size: 9.3pt;
+  font-weight: 700;
+  margin-top: 6pt;
+  margin-bottom: 2pt;
+  color: #333;
+}
+
+p { margin: 0 0 4pt 0; text-align: justify; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 8pt 0;
+  font-size: 8.5pt;
+  font-family: 'Liberation Sans', sans-serif;
+}
+
+th {
+  background: #f1f5f9;
+  border-bottom: 2px solid #333;
+  padding: 4pt 6pt;
+  text-align: left;
+  font-weight: 700;
+  font-size: 8pt;
+}
+
+td {
+  border-bottom: 0.5px solid #e2e8f0;
+  padding: 3pt 6pt;
+}
+
+tr:last-child td { border-bottom: 1.5px solid #333; }
+
+.highlight { background: #fffbeb; }
+.strong-num { font-weight: 700; color: #2563eb; }
+.zero { color: #999; }
+
+figure {
+  margin: 4pt 0;
+  text-align: center;
+  page-break-inside: avoid;
+}
+
+figure img {
+  max-width: 95%;
+  height: auto;
+}
+
+figcaption {
+  font-size: 7.5pt;
+  color: #555;
+  margin-top: 3pt;
+  text-align: left;
+  font-family: 'Liberation Sans', sans-serif;
+  line-height: 1.25;
+}
+
+.two-col {
+  columns: 2;
+  column-gap: 14pt;
+  font-size: 9pt;
+}
+
+blockquote {
+  border-left: 2pt solid #cbd5e1;
+  margin: 6pt 0 6pt 0;
+  padding: 2pt 0 2pt 10pt;
+  color: #444;
+  font-style: italic;
+  font-size: 9pt;
+}
+
+.footnote {
+  font-size: 7.5pt;
+  color: #666;
+}
+
+.key-finding {
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 3pt;
+  padding: 4pt 8pt;
+  margin: 6pt 0;
+  font-size: 8.5pt;
+}
+
+.key-finding strong { color: #1d4ed8; }
+
+.cols-2 {
+  display: flex;
+  gap: 12pt;
+}
+.cols-2 > div { flex: 1; }
+</style>
+</head>
+<body>
+
+<h1>How System Prompt Framing Shapes<br>AI Coding Agent Behavior</h1>
+<div class="authors">Perttu Landström &amp; Hestia</div>
+<div class="date">March 2026 · Polis Research</div>
+
+<div class="abstract">
+<div class="abstract-title">Abstract</div>
+AI coding agents receive behavioral guidance through system prompts, yet there is little empirical understanding of whether the <em>format</em> of that guidance affects what agents actually do. We present a controlled experiment testing six system prompt conditions that encode the same four behavioral targets using five delivery vehicles: minimal instruction, conventional role-with-examples, values framing, values-with-examples, and first-person failure memories. Fifty-four sealed runs across three Claude-family models reveal that delivery vehicle matters at least as much as the targets themselves. First-person experience memories produce the highest incidental security detection rate (56% vs 33% for explicit instructions) but fail completely at output format compliance (0% vs 100%). Mid-capability models (Sonnet) show a sharp engineering depth transition: conditions with values-framed examples or experience memories unlock deep lifecycle fixes (3/3) that are completely absent under conventional or minimal instructions (0/3). The highest-scoring condition on our compliance rubric produced the shallowest engineering.
+</div>
+
+<h2>1. Introduction</h2>
+
+<p>AI coding agents are deployed with system prompts ranging from bare task descriptions to elaborate persona definitions with values frameworks and experience narratives. Despite the centrality of system prompt design to agent behavior, there is almost no empirical basis for understanding which framing approaches produce which outcomes.</p>
+
+<p>We address three questions: (1) Does the framing of behavioral targets affect measurable behaviors on an identical coding task? (2) Do different delivery vehicles activate different behavioral dimensions? (3) Do these effects interact with model capability?</p>
+
+<p>Our results demonstrate that the delivery vehicle for behavioral targets matters independently of the targets themselves — and that the most compliance-producing prompt may not be the one producing the best engineering.</p>
+
+<h2>2. Experimental Design</h2>
+
+<h3>Task</h3>
+<p>A Go dispatch service with four planted signals: a <strong>false Redis premise</strong> (B1), a <strong>structural-vs-procedural fix</strong> choice (B2), an <strong>incidental credential leak</strong> in a debug handler (B3), and an implied <strong>learning capture</strong> opportunity (B4). The core bug — duplicate dispatch on config reload due to missing Stop() before Start() — has both a shallow fix (remove a goroutine) and a deep fix (synchronize the Stop→Start lifecycle with a done channel).</p>
+
+<h3>Conditions</h3>
+
+<table>
+<tr><th>Condition</th><th>Words</th><th>Content</th></tr>
+<tr><td>Minimal</td><td>62</td><td>Four imperative sentences stating desired behaviors</td></tr>
+<tr><td>Conventional</td><td>337</td><td>Professional role frame + 3 BAD/GOOD example pairs</td></tr>
+<tr><td>Mythology-only</td><td>913</td><td>Eight values principles ("Golden Truths"), no examples</td></tr>
+<tr class="highlight"><td>Mythology+Examples</td><td>1,160</td><td>Golden Truths + 8 BAD/GOOD example pairs (one per principle)</td></tr>
+<tr><td>Experienced</td><td>886</td><td>Light identity + 12 first-person failure memories</td></tr>
+<tr><td>Polis (Full Stack)</td><td>1,612</td><td>Identity + Golden Truths + experience memories</td></tr>
+</table>
+
+<p>All conditions encode the same four behavioral targets. Both Conventional and Mythology+Examples use BAD/GOOD contrast examples targeting overlapping behavioral categories (tracking, structural fixes, requirement challenge), but differ in framing context (professional role vs. values principles), example count (3 vs. 8 pairs), and specific example text. Three Claude-family models (Haiku, Sonnet, Opus) × 3 replicas × 6 conditions = 54 sealed runs.</p>
+
+<h3>Measurements</h3>
+<p>Primary: B1–B4 rubric (0–2 each, max 8). Extended: workspace diff analysis capturing bug fix depth (inline-flush vs done-channel), test creation, runbook modification, documentation files, security handling, and cost/tokens.</p>
+
+<h2>3. Results</h2>
+
+<h3>3.1 Compliance Scores</h3>
+
+<p>B1 (premise challenge) and B2 (structural fix) saturated at ceiling across all conditions. The discriminating dimensions are B3 (incidental finding detection) and B4 (learning capture):</p>
+
+<figure>
+<img src="fig3-heatmaps.png" alt="B3 and B4 hit rates">
+<figcaption><strong>Figure 1.</strong> B3 and B4 hit rates by condition × model (N=3 per cell). Experienced dominates B3 for Sonnet and Opus. Conventional dominates B4 universally. No condition excels at both.</figcaption>
+</figure>
+
+<figure>
+<img src="fig1-tradeoff.png" alt="B3-B4 tradeoff">
+<figcaption><strong>Figure 2.</strong> The B3–B4 tradeoff. Conventional achieves both compliance dimensions. Experienced beats Conventional on detection alone. The remaining conditions cluster at neither.</figcaption>
+</figure>
+
+<div class="key-finding">
+<strong>Key finding:</strong> Experience memories drive security detection at higher rates than explicit instructions (experienced 56% vs conventional 33%) but produce zero learning sections (0% vs 100%). Motivation ≠ prescription.
+</div>
+
+<h3>3.2 The Engineering Depth Unlock</h3>
+
+<p>Beyond the rubric, workspace diff analysis reveals a qualitative engineering transition invisible to B1–B4 scoring. The bug has two valid fixes: removing the goroutine (inline, shallow) or adding lifecycle synchronization (done-channel, deep). The done-channel fix addresses the root cause — <code>Stop()</code> returning before the goroutine exits — and eliminates the operational workaround.</p>
+
+<figure>
+<img src="fig2-depth-unlock.png" alt="Engineering depth unlock">
+<figcaption><strong>Figure 3.</strong> Deep fix rate (done-channel implementation) by condition. Opus achieves the deep fix in all conditions (18/18). Sonnet transitions from 0% to 100% at Mythology+Examples. Haiku transitions at Experienced.</figcaption>
+</figure>
+
+<p>For Sonnet, the transition is a step function. Minimal, Conventional, and Mythology-Only produce 0/3 deep fixes. Mythology+Examples, Experienced, and Polis produce 3/3. These depth-unlocking conditions differ from Conventional in multiple ways — Mythology+Examples has values framing, more example pairs (8 vs 3), and different example text; Experienced uses an entirely different vehicle (first-person failure memories). What they share is a prompt structure that models <em>how to reason</em> rather than <em>what to produce</em>.</p>
+
+<table>
+<tr><th>Dimension</th><th>Conventional<br>(role + 3 examples)</th><th>Myth+Examples<br>(values + 8 examples)</th><th>Experienced<br>(12 failure memories)</th></tr>
+<tr><td>Deep lifecycle fix</td><td class="zero">0/3</td><td class="strong-num">3/3</td><td class="strong-num">3/3</td></tr>
+<tr><td>New tests created</td><td class="zero">0</td><td class="strong-num">6</td><td class="strong-num">6</td></tr>
+<tr><td>B4 compliance</td><td class="strong-num">3/3</td><td>2/3</td><td class="zero">0/3</td></tr>
+</table>
+
+<div class="key-finding">
+<strong>Key finding:</strong> The highest-scoring rubric condition (Conventional, 6.89/8) produced the shallowest engineering. Conditions that unlock deep lifecycle fixes score lower on compliance (4.89–5.22/8) but produce fundamentally better code.
+</div>
+
+<h3>3.3 Cost</h3>
+
+<p>Experience memories trigger qualitatively more work in Sonnet: 40 turns and 34K output tokens vs 19 turns and 9.5K for Conventional ($1.85/run vs $0.50, Figure 4). Opus remains at 29–33 turns regardless of condition ($0.63–$0.77), suggesting the extra work reflects Sonnet entering a different cognitive mode rather than a universal response to context length.</p>
+
+<figure>
+<img src="fig4-cost.png" alt="Cost by condition">
+<figcaption><strong>Figure 4.</strong> Cost per run by condition and model. Sonnet-Experienced ($1.85) costs 3.7× Sonnet-Conventional. Opus is cost-stable across conditions.</figcaption>
+</figure>
+
+<h2>4. Analysis</h2>
+
+<h3>4.1 Three Delivery Vehicle Modes</h3>
+
+<p>Our results suggest delivery vehicles activate categorically different behavioral modes:</p>
+
+<p><strong>Procedural instructions</strong> (Conventional) shape <em>output structure</em> — what to produce, where, when. They excel at compliance (B4: 9/9) but do not change how the agent reasons about the problem. The agent fixes the surface symptom and formats the response correctly.</p>
+
+<p><strong>Values-framed examples</strong> (Mythology+Examples) appear to shape <em>reasoning approach</em>. The Golden Truths ("Structure Over Discipline") contextualize examples within principles that explain <em>why</em> structural solutions are better. This condition differs from Conventional in framing, example count (8 vs 3), and scope — we cannot fully isolate which factor drives depth, but the combination produces root-cause analysis. Values without examples (Mythology-Only) fail entirely.</p>
+
+<p><strong>Experience memories</strong> (Experienced) shape <em>attention and perception</em> — what to notice, what patterns to recognize as significant. First-person failure stories prime the agent to detect similar patterns in novel code. The experience entries don't hint at the specific done-channel solution; the agent synthesizes across multiple entries (lifecycle testing + runbook-as-bug-map + idempotency-in-callee) to reach deeper understanding.</p>
+
+<h3>4.2 Motivation vs. Prescription</h3>
+
+<p>The experience entry about learning capture communicates <strong>why</strong> to capture learning (prevent repeated debugging) without <strong>where, when, or how</strong>. The conventional instruction — "include a section documenting what you learned; this is required" — provides zero motivation but complete prescription. For output format, prescription wins (9/9 vs 0/9). For detection behaviors, motivation wins (56% vs 33%). Different delivery vehicles for different behavioral categories.</p>
+
+<h3>4.3 Model Capability as Threshold</h3>
+
+<p><strong>Opus</strong> achieves the deep fix in all conditions (18/18) — it is above the structural-quality threshold. <strong>Sonnet</strong> has the latent capability but requires richer context to activate it; the 0/3 → 3/3 transition is a step function. <strong>Haiku</strong> responds to richer prompts by producing more documentation files rather than better code — volume, not quality.</p>
+
+<h3>4.4 Dilution</h3>
+
+<p>Combining experience memories with Golden Truths (Polis) <em>reduced</em> security detection: experienced 5/9 → polis 1/9. More context produced less behavior — attention competition between operationally specific memories and abstract values. A focused message outperforms a comprehensive one.</p>
+
+<h3>Limitations</h3>
+
+<p>Single scenario (Go debugging), single rater, N=3 per cell (insufficient for formal significance), prompt length confound (62–1,612 words), Claude-family only. The depth-unlocking conditions differ from Conventional in multiple ways (framing, example count, example text), preventing clean causal isolation.</p>
+
+<h2>5. Conclusion</h2>
+
+<p>The format in which agents receive behavioral guidance is not a stylistic choice — it is a design parameter that independently shapes outcomes. Three findings stand out:</p>
+
+<p><strong>First</strong>, richer prompt conditions — values-framed examples and experience memories — unlock engineering depth (deep lifecycle fixes, test creation) completely absent under conventional instructions, despite conventional achieving the highest compliance score. The factors driving this unlock likely operate in combination; isolating their individual contributions is a priority for future work.</p>
+
+<p><strong>Second</strong>, first-person failure memories are the most effective vehicle for activating detection behaviors, outperforming explicit instructions — but they completely fail at output format compliance. Experience provides motivation without prescription.</p>
+
+<p><strong>Third</strong>, the compliance-optimizing prompt is not the engineering-optimizing prompt. Our rubric, designed to measure "good agent behavior," was partially measuring the wrong thing. The highest-scoring condition produced the shallowest code. Evaluation of agent behavior must look beyond response-text compliance into workspace artifacts.</p>
+
+<div class="footnote" style="margin-top: 14pt; border-top: 0.5px solid #ccc; padding-top: 6pt;">
+<strong>Data availability.</strong> Full dataset (54 runs × 124 columns), all system prompts, scenario source, scoring notes, and workspace diffs are available in the experiment repository. Total experiment cost: $33.82.
+</div>
+
+</body>
+</html>

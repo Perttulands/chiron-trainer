@@ -1,0 +1,43 @@
+name: "011-extensions-vs-bare"
+version: 1
+
+models:
+  - id: "qwen3.5:9b-t03"
+    provider: ollama
+    options:
+      num_ctx: 131072
+
+conditions:
+  - name: bare-r1
+    system_prompt: prompts/champion.txt
+  - name: bare-r2
+    system_prompt: prompts/champion.txt
+  - name: bare-r3
+    system_prompt: prompts/champion.txt
+
+scenario:
+  workspace: ../003-mythology-impact-v2/scenario/
+  user_prompt: ../003-mythology-impact-v2/prompts/user-task.txt
+  tools:
+    - read
+    - bash
+    - edit
+    - write
+    - grep
+    - find
+    - ls
+
+execution:
+  replicas: 1
+  sandbox: bwrap
+  trace_capture: false
+  br_stub: true
+  timeout_seconds: 1200
+
+scoring:
+  auto_scorers:
+    - type: workspace_diff
+    - type: br_stub
+  weights:
+    workspace_diff: 0.6
+    br_stub: 0.4

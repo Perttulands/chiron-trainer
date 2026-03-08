@@ -1,0 +1,37 @@
+[18:26:23] Waiting for Round 3 to complete...
+[18:40:53] Round 3 complete
+
+=== ROUND 3 RESULTS ===
+v3-checklist-br-exact-1        turns=40  edits=6   diff=77   br=0
+0 wall=281s
+v3-checklist-compact-1         turns=40  edits=2   diff=408  br=0
+0 wall=474s
+v3-checklist-example-1         turns=25  edits=5   diff=173  br=0
+0 wall=283s
+v3-ultra-compact-1             turns=57  edits=13  diff=17   br=0
+0 wall=535s
+
+Best R3 variant by edits: v3-ultra-compact-1 (13 edits)
+
+=== ROUND 4 STARTING ===
+Experiment: 003-evolution (4 cells)
+2026/03/08 18:44:38 [1/4][25%] model=qwen3.5:9b-full condition=v4-champion-blend replica=1 turns=25 wall=224s
+2026/03/08 18:47:48 [2/4][50%] model=qwen3.5:9b-full condition=v4-br-hammer replica=1 turns=8 wall=190s
+2026/03/08 18:50:20 [3/4][75%] model=qwen3.5:9b-full condition=v4-micro replica=1 turns=21 wall=152s
+2026/03/08 18:58:01 [4/4][100%] model=qwen3.5:9b-full condition=v4-structured-checklist replica=1 turns=56 wall=460s
+
+Completed: 4/4 cells
+
+=== ROUND 4 RESULTS ===
+v4-br-hammer-1                 turns=8   edits=0   diff=0    br=0
+0 wall=190s
+v4-champion-blend-1            turns=25  edits=10  diff=121  br=0
+0 wall=224s
+v4-micro-1                     turns=21  edits=9   diff=101  br=0
+0 wall=152s
+v4-structured-checklist-1      turns=56  edits=0   diff=132  br=0
+0 wall=460s
+
+=== EVOLUTION STATUS ===
+Rounds 1-4 complete. Ready for rounds 5-10.
+Check: /home/polis/tools/chiron/experiments/003-evolution/LAB-BOOK.md

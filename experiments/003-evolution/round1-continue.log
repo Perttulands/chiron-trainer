@@ -1,0 +1,7 @@
+Experiment: 003-evolution (4 cells)
+2026/03/08 17:18:06 [1/4][25%] SKIP model=qwen3.5:9b-full condition=v1-baseline replica=1 (already done)
+2026/03/08 17:28:20 [2/4][50%] model=qwen3.5:9b-full condition=v1-action-biased replica=1 turns=41 wall=614s
+2026/03/08 17:34:27 [3/4][75%] model=qwen3.5:9b-full condition=v1-tool-first replica=1 turns=37 wall=366s
+2026/03/08 17:37:25 [4/4][100%] model=qwen3.5:9b-full condition=v1-structured-steps replica=1 turns=10 wall=177s
+
+Completed: 3/4 cells
