@@ -16,7 +16,7 @@ Train AI agents through iterative evaluation loops. Define what you need, genera
 
 ## How it works
 
-Chiron generates system prompts for AI agents, runs them against your inputs, collects your evaluations, and uses the feedback to evolve better prompts. All state is stored locally in a single JSON file.
+Chiron generates system prompts for AI agents, runs them against your inputs, collects your evaluations, and uses the feedback to evolve better prompts. All state is stored locally in a single JSON file (`.chiron/state.json`).
 
 ![Chiron — How Agents Evolve](images/chiron_explained.png)
 
@@ -42,7 +42,7 @@ Or directly:
 go install .
 ```
 
-## Quick start
+## Quick Start
 
 ```bash
 # Set your API key
@@ -68,25 +68,28 @@ chiron run ses_XXXXXXXX --input "I want a refund for order #1234"
 
 | Command | Description |
 |---------|-------------|
-| `quickstart init --need "..."` | Create session with one lineage and first agent |
+| `quickstart init --need "..."` | Create session with one `main` lineage and baseline agent |
 | `training init --need "..."` | Create session with four lineages (A/B/C/D) |
+| `session new` | Create empty session record |
+| `session list` | List all sessions |
+| `session inspect <session-id>` | Show full session JSON |
 | `run <session-id> --input "..."` | Execute latest agent, store artifact |
-| `evaluate <artifact-id> --score N` | Score artifact 1-10 with optional `--comment` |
+| `evaluate <artifact-id> --score N` | Score artifact 1-10, optional `--comment` (immutable once set) |
 | `iterate <session-id>` | Generate next agent version from evaluations |
 | `training iterate <session-id>` | Iterate all unlocked training lineages |
 | `promote <session-id>` | Convert quickstart to training (4 lineages) |
-| `lineage lock <session-id> <name>` | Freeze a lineage (skip during iterate) |
+| `lineage lock <session-id> <name>` | Freeze a lineage (skip during training iterate) |
 | `lineage unlock <session-id> <name>` | Unfreeze a lineage |
-| `directive set <session-id> <lineage> --text "..." --sticky` | Add persistent directive |
-| `directive set <session-id> <lineage> --text "..." --oneshot` | Add one-time directive |
+| `directive set <session-id> <lineage> --text "..." --sticky` | Add persistent directive injected into evolution |
+| `directive set <session-id> <lineage> --text "..." --oneshot` | Add one-time directive (cleared after next iterate) |
 | `directive clear <session-id> <lineage> <directive-id>` | Remove a directive |
-| `session list` | List all sessions |
-| `session inspect <session-id>` | Show session details |
 | `artifact list <session-id>` | List artifacts with scores |
-| `artifact inspect <artifact-id>` | Show artifact details |
+| `artifact inspect <artifact-id>` | Show full artifact JSON |
 | `export agent <agent-id> --format json\|python\|typescript` | Export agent definition |
-| `export evidence <session-id>` | Export session data for analysis |
-| `doctor` | Check environment (API keys, executors) |
+| `export evidence <session-id>` | Export session evidence pack (lineages, agents, artifacts, directives) |
+| `doctor` | Check environment (API keys, executor binaries) |
+| `version` | Print version |
+| `completion bash\|zsh\|fish\|powershell` | Generate shell completion script |
 
 All commands support `--json` for machine-readable output.
 
@@ -98,13 +101,29 @@ export ANTHROPIC_API_KEY=sk-...
 chiron quickstart init --need "..."
 ```
 
-**OpenAI-compatible** (OpenAI, LiteLLM, OpenRouter):
+**OpenAI-compatible** (OpenAI, OpenRouter, LiteLLM):
 ```bash
 export OPENAI_API_KEY=sk-...
 chiron quickstart init --need "..." --provider openai-compatible --model gpt-4o
 ```
 
+**Claude CLI**:
+```bash
+chiron run ses_XXX --mode cli --executor claude --input "..."
+```
+
+Provider aliases accepted: `openai`, `openrouter`, `litellm` → `openai-compatible`; `claude`, `claude-code` → `claude-cli`.
+
 Override per-command with `--provider`, `--model`, `--base-url`, `--api-key`.
+
+**Environment variables:**
+
+| Variable | Used by |
+|----------|---------|
+| `ANTHROPIC_API_KEY` | Anthropic provider |
+| `OPENAI_API_KEY` | OpenAI-compatible provider |
+| `OPENAI_COMPATIBLE_API_KEY` | OpenAI-compatible provider (alternative) |
+| `API_KEY` | OpenAI-compatible provider (generic fallback) |
 
 ## Training workflow
 
@@ -128,19 +147,19 @@ chiron lineage lock ses_XXX A
 chiron training iterate ses_XXX
 ```
 
+**Promote strategy:** convert a quickstart session to training with one of two variant families:
+- `variations` (conservative/balanced/creative/aggressive) — default
+- `alternatives` (rule-based/retrieval-first/planning-first/critique-revise)
+
+```bash
+chiron promote ses_XXX --strategy variations
+```
+
 ## State
 
 State lives at `.chiron/state.json` relative to your working directory. One directory per project keeps state isolated. Add `.chiron/` to your `.gitignore`.
 
 If upgrading from a previous version, the tool automatically migrates `.ludus-magnus/` to `.chiron/` on first run.
-
-## CLI execution mode
-
-Run agents through `claude` or `codex` CLI tools instead of the API:
-
-```bash
-chiron run ses_XXX --mode cli --executor claude --input "..."
-```
 
 ## Development
 
@@ -149,12 +168,6 @@ make test              # Unit tests
 make test-integration  # Integration tests (builds binary, uses mock server)
 make clean             # Remove build artifacts
 ```
-
-## Dependencies
-
-None required. Standalone tool.
-
-Optional: `gate` -- enables quality scoring of agent outputs during evaluation.
 
 ## Part of Polis
 
