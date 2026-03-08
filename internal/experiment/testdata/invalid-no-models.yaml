@@ -1,0 +1,9 @@
+name: bad-experiment
+version: 1
+models: []
+conditions:
+  - name: baseline
+    system_prompt: prompt-baseline.txt
+scenario:
+  workspace: workspace
+  user_prompt: user-prompt.txt

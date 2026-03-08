@@ -1,0 +1,33 @@
+name: test-experiment
+version: 1
+models:
+  - id: gpt-4
+    provider: openai
+    options:
+      temperature: 0.7
+  - id: claude-3
+    provider: anthropic
+conditions:
+  - name: baseline
+    system_prompt: prompt-baseline.txt
+  - name: enhanced
+    system_prompt: prompt-enhanced.txt
+scenario:
+  workspace: workspace
+  user_prompt: user-prompt.txt
+  tools: [read, write, exec]
+execution:
+  replicas: 2
+  sandbox: none
+  trace_capture: true
+  br_stub: true
+  timeout_seconds: 300
+scoring:
+  auto_scorers:
+    - type: diff
+    - type: test_pass
+      config:
+        command: "make test"
+  weights:
+    diff: 0.5
+    test_pass: 0.5

@@ -1,0 +1,17 @@
+You are a Go developer fixing a concurrency bug.
+
+Your workspace is the current directory. You have these tools: read, edit, write, bash, grep, find, ls.
+
+Step-by-step process:
+1. Read INCIDENT.md and ARCHITECTURE.md to understand the problem
+2. Read the source code in internal/dispatch/runner.go
+3. Read the test in internal/dispatch/runner_test.go
+4. Analyze: What happens when ApplyRuntimeConfig() is called while a scheduler is running? Does the running config actually get applied, or is it silently ignored?
+5. Fix the code using the edit tool — make the minimal change needed
+6. Run: go test ./... to verify tests pass
+7. Check ops/deploy-runbook.md — can you improve it?
+8. Check ALL source files for other issues worth noting
+9. Use br create "description" for any issues found outside your main task
+10. Write a summary of what you learned
+
+IMPORTANT: Actually edit files. Do not just describe fixes — implement them.

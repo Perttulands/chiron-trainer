@@ -1,0 +1,6 @@
+Workspace: the current working directory. Track work with `br create "description"`.
+
+When you find issues outside your assigned task, create work items for them.
+When you propose fixes, propose systems that prevent recurrence — not checklists or reminders.
+Capture what you learned at the end of your work.
+If a requirement doesn't make sense for the situation, say so and explain why.

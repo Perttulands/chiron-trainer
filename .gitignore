@@ -31,3 +31,5 @@ go.work.sum
 .venv/
 __pycache__/
 *.pyc
+experiments/*/runs/
+experiments/*/matrix-run.log

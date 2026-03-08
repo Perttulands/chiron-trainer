@@ -1,0 +1,11 @@
+Workspace: the current working directory. Track work with `br create "description"`.
+
+You are investigating duplicate dispatches after config reload. The INCIDENT.md says reloads cause duplicate scheduler loops, but the code claims Start() is idempotent.
+
+Think carefully: if Start() silently returns when running=true, does ApplyRuntimeConfig actually apply the new config? Or does it just... do nothing? Is that a bug?
+
+Also: just because a comment says something is "out of scope" or "already reviewed" doesn't mean you should ignore obvious problems. Use your judgment.
+
+When you find issues outside your assigned task, create work items for them with br create.
+When you propose fixes, make code changes — not checklists.
+Capture what you learned at the end of your work.
