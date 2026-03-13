@@ -61,6 +61,12 @@ Gaps:
 - ⚠️ No Pi CLI provider (Ollama native covers the same models; Pi parsing is different enough to need its own adapter)
 - ⚠️ Doctor command only checks one provider at a time
 
+## Docs
+
+- `docs/CLI_USAGE.md` for command workflows
+- `docs/ARCHITECTURE.md` for runtime structure
+- `docs/EVALUATION_METHODOLOGY.md` for controlled comparison and experiment design
+
 ## Install
 
 ```bash
